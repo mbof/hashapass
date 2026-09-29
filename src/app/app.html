@@ -9,149 +9,152 @@
   </div>
 }
 
-<table style="width: 800px; margin: 0 auto;">
-  <tbody>
-    <tr>
-      <td>
-        <table style="width: 100%;">
-          <tbody>
-            <tr>
-              <td>
-                <h1 style="margin: 0; padding: 0"><a href="#">hashapass</a></h1>
-                <div>password generator</div>
-              </td>
-              <td style="text-align: right; font-size: small">
-                <a href="javascript:void(0)" (click)="toggleZippy('how')">How it works</a> &middot;
-                <a href="javascript:void(0)" (click)="toggleZippy('why')">Security</a> &middot;
-                <a href="https://github.com/mbof/hashapass" target="_blank" rel="noopener">GitHub</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="main-wrapper">
+  <table class="main-table">
+    <tbody>
+      <tr>
+        <td>
+          <table class="header-table">
+            <tbody>
+              <tr>
+                <td>
+                  <h1 style="margin: 0; padding: 0"><a href="#">hashapass</a></h1>
+                  <div>password generator</div>
+                </td>
+                <td class="header-nav">
+                  <a href="javascript:void(0)" (click)="toggleZippy('how')">How it works</a> &middot;
+                  <a href="javascript:void(0)" (click)="toggleZippy('why')">Security</a> &middot;
+                  <a href="https://github.com/mbof/hashapass" target="_blank" rel="noopener">GitHub</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <div style="text-align: center;">
-          <form (submit)="onUpdate($event)" name="hashapass">
-            <table style="margin: 40px auto 40px auto;">
-              <tbody>
-                <tr>
-                  <td style="text-align: right; width: 30%;"> Parameter </td>
-                  <td>
-                    <input
-                      id="parameterId"
-                      name="parameter"
-                      size="16"
-                      style="font-family: monospace"
-                      autocomplete="on"
-                      [(ngModel)]="parameter"
-                      placeholder="e.g. google.com"
-                    />
-                  </td>
-                  <td style="font-size: small; text-align: left; padding-left: 0.5em;">
-                    Something simple (&ldquo;website&rdquo;, &ldquo;email&rdquo;...)
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: right"> Master password </td>
-                  <td>
-                    <input
-                      type="password"
-                      id="seedId"
-                      name="seed"
-                      size="16"
-                      style="font-family: monospace"
-                      [(ngModel)]="seed"
-                    />
-                  </td>
-                  <td style="font-size: small; text-align: left; padding-left: 0.5em;">
-                    Make this one hard&mdash;and be sure to remember it
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="3"><hr /></td>
-                </tr>
-                <tr>
-                  <td style="text-align: right">
-                    <input id="submitId" type="submit" value="Hashapass!" />
-                  </td>
-                  <td>
-                    <input
-                      name="result"
-                      id="resultId"
-                      size="16"
-                      readonly
-                      style="font-family: monospace; font-weight: bold;"
-                      [value]="result()"
-                      (click)="selectResult($event)"
-                    />
-                  </td>
-                  <td style="font-size: small; text-align: left; padding-left: 0.5em;">
-                    @if (result()) {
-                      <button type="button" (click)="copyToClipboard()" style="cursor: pointer; padding: 2px 6px;">
-                        {{ copied() ? 'Copied!' : 'Copy' }}
-                      </button>
+          <div style="text-align: center;">
+            <form (submit)="onUpdate($event)" name="hashapass">
+              <table class="form-table">
+                <tbody>
+                  <tr>
+                    <td class="form-label"> Parameter </td>
+                    <td class="form-input-cell">
+                      <input
+                        id="parameterId"
+                        name="parameter"
+                        size="16"
+                        class="form-input"
+                        autocomplete="on"
+                        [(ngModel)]="parameter"
+                        placeholder="e.g. google.com"
+                      />
+                    </td>
+                    <td class="form-help">
+                      Something simple (&ldquo;website&rdquo;, &ldquo;email&rdquo;...)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="form-label"> Master password </td>
+                    <td class="form-input-cell">
+                      <input
+                        type="password"
+                        id="seedId"
+                        name="seed"
+                        size="16"
+                        class="form-input"
+                        [(ngModel)]="seed"
+                      />
+                    </td>
+                    <td class="form-help">
+                      Make this one hard&mdash;and be sure to remember it
+                    </td>
+                  </tr>
+                  <tr class="form-divider-row">
+                    <td colspan="3"><hr /></td>
+                  </tr>
+                  <tr>
+                    <td class="form-submit-cell">
+                      <input id="submitId" class="form-submit-btn" type="submit" value="Hashapass!" />
+                    </td>
+                    <td class="form-input-cell">
+                      <div class="result-group">
+                        <input
+                          name="result"
+                          id="resultId"
+                          size="16"
+                          readonly
+                          class="result-input"
+                          [value]="result()"
+                          (click)="selectResult($event)"
+                        />
+                        @if (result()) {
+                          <button type="button" class="copy-button" (click)="copyToClipboard()">
+                            {{ copied() ? 'Copied!' : 'Copy' }}
+                          </button>
+                        }
+                      </div>
+                    </td>
+                    <td class="result-action-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <table class="info-table">
+            <tbody>
+              <tr>
+                <td style="width: 100%; vertical-align: top;">
+                  <p><b>A different password for every website and just one password to remember.</b></p>
+                  <p>Hashapass automatically generates strong passwords from a master password and a parameter.</p>
+
+                  <div class="zippy">
+                    <div class="zippyTitle" (click)="toggleZippy('why')">
+                      {{ zippyWhy() ? '▼' : '►' }} Why use Hashapass?
+                    </div>
+                    @if (zippyWhy()) {
+                      <div class="zippyContents">
+                        <p>If you're like most people, you reuse the same password in many different places.</p>
+                        <p>Once attackers compromise one insecure website, they steal passwords and use them to log into other accounts. When they get into all your accounts, it gets ugly.</p>
+                        <p>Hashapass lets you remember just one master password and use it to deterministically generate a different password for every website or service.</p>
+                      </div>
                     }
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
-        </div>
-
-        <table>
-          <tbody>
-            <tr>
-              <td style="width: 100%; vertical-align: top;">
-                <p><b>A different password for every website and just one password to remember.</b></p>
-                <p>Hashapass automatically generates strong passwords from a master password and a parameter.</p>
-
-                <div class="zippy">
-                  <div class="zippyTitle" (click)="toggleZippy('why')">
-                    {{ zippyWhy() ? '▼' : '►' }} Why use Hashapass?
                   </div>
-                  @if (zippyWhy()) {
-                    <div class="zippyContents">
-                      <p>If you're like most people, you reuse the same password in many different places.</p>
-                      <p>Once attackers compromise one insecure website, they steal passwords and use them to log into other accounts. When they get into all your accounts, it gets ugly.</p>
-                      <p>Hashapass lets you remember just one master password and use it to deterministically generate a different password for every website or service.</p>
-                    </div>
-                  }
-                </div>
 
-                <div class="zippy">
-                  <div class="zippyTitle" (click)="toggleZippy('how')">
-                    {{ zippyHow() ? '▼' : '►' }} How does it work?
+                  <div class="zippy">
+                    <div class="zippyTitle" (click)="toggleZippy('how')">
+                      {{ zippyHow() ? '▼' : '►' }} How does it work?
+                    </div>
+                    @if (zippyHow()) {
+                      <div class="zippyContents">
+                        <p>First, choose a "master password". Make it hard to guess. Be sure you remember it.</p>
+                        <p>To generate a password, enter a parameter, like the domain or service name. Hashapass computes the HMAC-SHA1 of your parameter with your master password and produces an 8-character string.</p>
+                        <p><em>The passwords are never transmitted over the network or stored in any database</em>.</p>
+                        <p>Given the same master password and parameter, Hashapass will <em>always give you the exact same result</em>.</p>
+                      </div>
+                    }
                   </div>
-                  @if (zippyHow()) {
-                    <div class="zippyContents">
-                      <p>First, choose a "master password". Make it hard to guess. Be sure you remember it.</p>
-                      <p>To generate a password, enter a parameter, like the domain or service name. Hashapass computes the HMAC-SHA1 of your parameter with your master password and produces an 8-character string.</p>
-                      <p><em>The passwords are never transmitted over the network or stored in any database</em>.</p>
-                      <p>Given the same master password and parameter, Hashapass will <em>always give you the exact same result</em>.</p>
-                    </div>
-                  }
-                </div>
 
-                <div class="zippy">
-                  <div class="zippyTitle" (click)="toggleZippy('where')">
-                    {{ zippyWhere() ? '▼' : '►' }} Where are my passwords stored?
+                  <div class="zippy">
+                    <div class="zippyTitle" (click)="toggleZippy('where')">
+                      {{ zippyWhere() ? '▼' : '►' }} Where are my passwords stored?
+                    </div>
+                    @if (zippyWhere()) {
+                      <div class="zippyContents">
+                        <p>You don&rsquo;t store your generated passwords anywhere: just remember your master password and the parameter name.</p>
+                        <p>Because the logic is fully client-side and deterministic, you can even save this page offline and generate your passwords without an internet connection.</p>
+                      </div>
+                    }
                   </div>
-                  @if (zippyWhere()) {
-                    <div class="zippyContents">
-                      <p>You don&rsquo;t store your generated passwords anywhere: just remember your master password and the parameter name.</p>
-                      <p>Because the logic is fully client-side and deterministic, you can even save this page offline and generate your passwords without an internet connection.</p>
-                    </div>
-                  }
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <hr style="margin: 25px 0;" />
-        <div style="text-align: center; font-size: x-small; color: #555;">
-          Hashapass &middot; Deterministic Client-Side Password Generator &middot; Hosted on <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <hr style="margin: 25px 0;" />
+          <div style="text-align: center; font-size: x-small; color: #555;">
+            Hashapass &middot; Deterministic Client-Side Password Generator &middot; Hosted on <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

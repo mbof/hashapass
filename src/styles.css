@@ -1,9 +1,12 @@
 body {
   color: black;
   background-color: #F9FBD1;
+  background-image: linear-gradient(to bottom, #fdde6a 0px, #F9FBD1 50px);
+  background-repeat: no-repeat;
   font-family: verdana, sans-serif;
   margin: 0;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 p {
@@ -44,8 +47,9 @@ a:hover {
   cursor: pointer;
   color: rgb(122, 22, 22);
   text-decoration: underline;
-  padding-left: 10px;
+  padding: 8px 10px;
   user-select: none;
+  display: block;
 }
 
 .zippyTitle:hover {
@@ -69,6 +73,7 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   max-width: 800px;
+  box-sizing: border-box;
 }
 
 .transition-banner a {
@@ -79,10 +84,11 @@ a:hover {
 .transition-banner .close-btn {
   background: transparent;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1;
   font-weight: bold;
   color: #856404;
   cursor: pointer;
-  padding: 0 5px;
+  padding: 4px 8px;
   margin-left: 10px;
 }
