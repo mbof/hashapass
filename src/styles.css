@@ -1,0 +1,88 @@
+body {
+  color: black;
+  background-color: #F9FBD1;
+  font-family: verdana, sans-serif;
+  margin: 0;
+  padding: 10px;
+}
+
+p {
+  padding: 10px 0 0 10px;
+  margin: 0;
+}
+
+h1 {
+  color: rgb(122, 22, 22);
+}
+
+h2 {
+  color: rgb(150, 22, 22);
+}
+
+th {
+  text-align: right;
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: rgb(200, 20, 20);
+}
+
+a:hover {
+  color: rgb(150, 10, 10);
+}
+
+.zippy {
+  margin: 10px 0;
+}
+
+.zippyTitle {
+  font-weight: bold;
+  cursor: pointer;
+  color: rgb(122, 22, 22);
+  text-decoration: underline;
+  padding-left: 10px;
+  user-select: none;
+}
+
+.zippyTitle:hover {
+  color: rgb(180, 22, 22);
+}
+
+.zippyContents {
+  padding-left: 10px;
+}
+
+.transition-banner {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 10px 14px;
+  margin: 0 auto 15px auto;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+}
+
+.transition-banner a {
+  color: #533f03;
+  font-weight: bold;
+}
+
+.transition-banner .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #856404;
+  cursor: pointer;
+  padding: 0 5px;
+  margin-left: 10px;
+}
