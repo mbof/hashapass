@@ -20,4 +20,16 @@ if (fs.existsSync(indexPath)) {
   fs.writeFileSync(indexPath, html, 'utf8');
   fs.writeFileSync(fallbackPath, html, 'utf8');
   console.log('[post-build] Output index.html and 404.html ready.');
+
+  // Generate static stubs for localized paths (/fr/, /de/, /ja/)
+  const locales = ['fr', 'de', 'ja'];
+  for (const loc of locales) {
+    const locDir = path.join(distDir, loc);
+    if (!fs.existsSync(locDir)) {
+      fs.mkdirSync(locDir, { recursive: true });
+    }
+    const locHtml = html.replace(/<html lang="[^"]*"/, `<html lang="${loc}"`);
+    fs.writeFileSync(path.join(locDir, 'index.html'), locHtml, 'utf8');
+    console.log(`[post-build] Generated static stub for /${loc}/index.html`);
+  }
 }

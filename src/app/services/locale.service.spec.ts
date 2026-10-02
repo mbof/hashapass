@@ -1,0 +1,116 @@
+import { TestBed } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { LocaleService } from './locale.service';
+
+describe('LocaleService', () => {
+  let service: LocaleService;
+
+  beforeEach(() => {
+    localStorage.clear();
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(LocaleService);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+    vi.restoreAllMocks();
+    window.history.pushState({}, '', '/');
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('detectLocale', () => {
+    it('should detect double-slash French path (/hashapass//fr/index.html)', () => {
+      expect(service.detectLocale('/hashapass//fr/index.html', '')).toBe('fr');
+    });
+
+    it('should detect double-slash German path (/hashapass//de/index.html)', () => {
+      expect(service.detectLocale('/hashapass//de/index.html', '')).toBe('de');
+    });
+
+    it('should detect double-slash Japanese path (/hashapass//ja/index.html)', () => {
+      expect(service.detectLocale('/hashapass//ja/index.html', '')).toBe('ja');
+    });
+
+    it('should detect legacy apex double-slash path (//fr/index.html)', () => {
+      expect(service.detectLocale('//fr/index.html', '')).toBe('fr');
+    });
+
+    it('should detect clean directory paths (/hashapass/fr/, /hashapass/de)', () => {
+      expect(service.detectLocale('/hashapass/fr/', '')).toBe('fr');
+      expect(service.detectLocale('/hashapass/de', '')).toBe('de');
+      expect(service.detectLocale('/hashapass/ja/index.html', '')).toBe('ja');
+    });
+
+    it('should detect query parameters (?lang=fr, ?l=de)', () => {
+      expect(service.detectLocale('/hashapass/', '?lang=fr')).toBe('fr');
+      expect(service.detectLocale('/hashapass/', '?l=de')).toBe('de');
+      expect(service.detectLocale('/hashapass/', '?lang=ja')).toBe('ja');
+    });
+
+    it('should return null for standard paths or unknown locales', () => {
+      expect(service.detectLocale('/hashapass/', '')).toBeNull();
+      expect(service.detectLocale('/hashapass/index.html', '')).toBeNull();
+      expect(service.detectLocale('/hashapass/es/index.html', '')).toBeNull();
+      expect(service.detectLocale('', '')).toBeNull();
+    });
+  });
+
+  describe('setLocale & reactive translations', () => {
+    it('should default to English translations', () => {
+      service.setLocale('en');
+      expect(service.currentLocale()).toBe('en');
+      expect(service.t().parameterLabel).toBe('Parameter');
+      expect(service.t().submitButton).toBe('Hashapass!');
+    });
+
+    it('should reactively switch to French', () => {
+      service.setLocale('fr');
+      expect(service.currentLocale()).toBe('fr');
+      expect(service.t().parameterLabel).toBe('Paramètre');
+      expect(service.t().submitButton).toBe('Hashapass !');
+      expect(document.documentElement.lang).toBe('fr');
+    });
+
+    it('should reactively switch to German', () => {
+      service.setLocale('de');
+      expect(service.currentLocale()).toBe('de');
+      expect(service.t().seedLabel).toBe('Master-Passwort');
+      expect(document.documentElement.lang).toBe('de');
+    });
+
+    it('should reactively switch to Japanese', () => {
+      service.setLocale('ja');
+      expect(service.currentLocale()).toBe('ja');
+      expect(service.t().parameterLabel).toBe('パラメータ');
+      expect(service.t().seedLabel).toBe('マスターパスワード');
+      expect(document.documentElement.lang).toBe('ja');
+    });
+
+    it('should persist selected locale to localStorage', () => {
+      service.setLocale('fr', true);
+      expect(localStorage.getItem('hashapass_locale')).toBe('fr');
+    });
+
+    it('should ignore unsupported locale strings', () => {
+      service.setLocale('en');
+      // @ts-expect-error testing invalid input
+      service.setLocale('invalid');
+      expect(service.currentLocale()).toBe('en');
+    });
+  });
+
+  describe('URL normalization on initialization', () => {
+    it('should clean up double-slash path via history.replaceState', () => {
+      window.history.pushState({}, '', '/hashapass//fr/index.html');
+      const replaceStateSpy = vi.spyOn(window.history, 'replaceState');
+
+      service.initLocale();
+
+      expect(service.currentLocale()).toBe('fr');
+      expect(replaceStateSpy).toHaveBeenCalledWith(null, '', '/hashapass/?lang=fr');
+    });
+  });
+});

@@ -1,6 +1,8 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HashapassService } from './services/hashapass.service';
+import { LocaleService } from './services/locale.service';
+import { SupportedLocale, TRANSLATIONS } from './i18n/translations';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ import { HashapassService } from './services/hashapass.service';
 })
 export class App implements OnInit {
   private readonly hashapassService = inject(HashapassService);
+  readonly localeService = inject(LocaleService);
 
   parameter = '';
   seed = '';
@@ -22,6 +25,20 @@ export class App implements OnInit {
   zippyHow = signal(false);
   zippyWhere = signal(false);
 
+  readonly supportedLocales: SupportedLocale[] = ['en', 'fr', 'de', 'ja'];
+
+  get t() {
+    return this.localeService.t();
+  }
+
+  get currentLocale() {
+    return this.localeService.currentLocale();
+  }
+
+  getLocaleName(loc: SupportedLocale): string {
+    return TRANSLATIONS[loc].name;
+  }
+
   ngOnInit(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
       const dismissed = localStorage.getItem('hashapass_banner_dismissed');
@@ -29,6 +46,10 @@ export class App implements OnInit {
         this.showBanner.set(false);
       }
     }
+  }
+
+  setLanguage(lang: SupportedLocale): void {
+    this.localeService.setLocale(lang, true, true);
   }
 
   onUpdate(event?: Event): void {

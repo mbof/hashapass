@@ -4,6 +4,7 @@ import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [App],
     }).compileComponents();
@@ -47,5 +48,37 @@ describe('App', () => {
 
     app.toggleZippy('why');
     expect(app.zippyWhy()).toBe(false);
+  });
+
+  it('should switch languages and update rendered text', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    await fixture.whenStable();
+
+    // Default English
+    expect(app.t.submitButton).toBe('Hashapass!');
+
+    // Switch to French
+    app.setLanguage('fr');
+    fixture.detectChanges();
+    expect(app.currentLocale).toBe('fr');
+    expect(app.t.parameterLabel).toBe('Paramètre');
+    expect(app.t.submitButton).toBe('Hashapass !');
+
+    // Switch to Japanese
+    app.setLanguage('ja');
+    fixture.detectChanges();
+    expect(app.currentLocale).toBe('ja');
+    expect(app.t.parameterLabel).toBe('パラメータ');
+  });
+
+  it('should dismiss banner and persist dismissal', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app.showBanner()).toBe(true);
+
+    app.dismissBanner();
+    expect(app.showBanner()).toBe(false);
+    expect(localStorage.getItem('hashapass_banner_dismissed')).toBe('1');
   });
 });
