@@ -3,9 +3,6 @@ export type SupportedLocale = 'en' | 'fr' | 'de' | 'ja';
 export interface LocaleTranslations {
   name: string;
   subtitle: string;
-  howItWorksNav: string;
-  securityNav: string;
-  githubNav: string;
   parameterLabel: string;
   parameterPlaceholder: string;
   parameterHelp: string;
@@ -36,9 +33,6 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
   en: {
     name: 'English',
     subtitle: 'password generator',
-    howItWorksNav: 'How it works',
-    securityNav: 'Security',
-    githubNav: 'GitHub',
     parameterLabel: 'Parameter',
     parameterPlaceholder: 'e.g. google.com',
     parameterHelp: 'Something simple (“website”, “email”...)',
@@ -76,9 +70,6 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
   fr: {
     name: 'Français',
     subtitle: 'générateur de mot de passe',
-    howItWorksNav: 'Comment ça marche',
-    securityNav: 'Sécurité',
-    githubNav: 'GitHub',
     parameterLabel: 'Paramètre',
     parameterPlaceholder: 'ex. google.com',
     parameterHelp: 'Quelque chose de simple (« site », « messagerie »...)',
@@ -118,9 +109,6 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
   de: {
     name: 'Deutsch',
     subtitle: 'Passwortgenerator',
-    howItWorksNav: 'Wie es funktioniert',
-    securityNav: 'Sicherheit',
-    githubNav: 'GitHub',
     parameterLabel: 'Parameter',
     parameterPlaceholder: 'z.B. google.com',
     parameterHelp: 'Etwas Einfaches („Webseite“, „E-Mail“...)',
@@ -160,9 +148,6 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
   ja: {
     name: '日本語',
     subtitle: 'パスワード生成ツール',
-    howItWorksNav: '仕組み',
-    securityNav: 'セキュリティ',
-    githubNav: 'GitHub',
     parameterLabel: 'パラメータ',
     parameterPlaceholder: '例: google.com',
     parameterHelp: '簡単なもの（「ウェブサイト」、「メール」など）',

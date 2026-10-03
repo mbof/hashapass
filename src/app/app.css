@@ -18,10 +18,10 @@
   text-align: right;
   font-size: small;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .lang-switcher {
-  margin-bottom: 4px;
 }
 
 .lang-link {
@@ -115,10 +115,6 @@
     border-bottom: 1px solid #dcdcaa;
     white-space: normal;
     line-height: 2;
-  }
-
-  .lang-switcher {
-    margin-bottom: 6px;
   }
 
   .form-table {
