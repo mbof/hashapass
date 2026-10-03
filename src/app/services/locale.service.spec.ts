@@ -38,16 +38,28 @@ describe('LocaleService', () => {
       expect(service.detectLocale('//fr/index.html', '')).toBe('fr');
     });
 
-    it('should detect clean directory paths (/hashapass/fr/, /hashapass/de)', () => {
+    it('should detect double-slash Portuguese paths (/hashapass//pt/index.html, /hashapass//pt-br/index.html, /hashapass//pt-BR/index.html)', () => {
+      expect(service.detectLocale('/hashapass//pt/index.html', '')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass//pt-br/index.html', '')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass//pt-BR/index.html', '')).toBe('pt-BR');
+    });
+
+    it('should detect clean directory paths (/hashapass/fr/, /hashapass/de, /hashapass/pt, /hashapass/pt-BR)', () => {
       expect(service.detectLocale('/hashapass/fr/', '')).toBe('fr');
       expect(service.detectLocale('/hashapass/de', '')).toBe('de');
       expect(service.detectLocale('/hashapass/ja/index.html', '')).toBe('ja');
+      expect(service.detectLocale('/hashapass/pt/', '')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass/pt-br', '')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass/pt-BR', '')).toBe('pt-BR');
     });
 
-    it('should detect query parameters (?lang=fr, ?l=de)', () => {
+    it('should detect query parameters (?lang=fr, ?l=de, ?lang=pt-BR, ?lang=pt)', () => {
       expect(service.detectLocale('/hashapass/', '?lang=fr')).toBe('fr');
       expect(service.detectLocale('/hashapass/', '?l=de')).toBe('de');
       expect(service.detectLocale('/hashapass/', '?lang=ja')).toBe('ja');
+      expect(service.detectLocale('/hashapass/', '?lang=pt-BR')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass/', '?lang=pt')).toBe('pt-BR');
+      expect(service.detectLocale('/hashapass/', '?lang=pt-br')).toBe('pt-BR');
     });
 
     it('should return null for standard paths or unknown locales', () => {
@@ -89,6 +101,21 @@ describe('LocaleService', () => {
       expect(document.documentElement.lang).toBe('ja');
     });
 
+    it('should reactively switch to Brazilian Portuguese', () => {
+      service.setLocale('pt-BR');
+      expect(service.currentLocale()).toBe('pt-BR');
+      expect(service.t().parameterLabel).toBe('Parâmetro');
+      expect(service.t().seedLabel).toBe('Senha mestra');
+      expect(service.t().submitButton).toBe('Hashapass!');
+      expect(document.documentElement.lang).toBe('pt-BR');
+    });
+
+    it('should normalize pt to pt-BR in setLocale', () => {
+      service.setLocale('pt');
+      expect(service.currentLocale()).toBe('pt-BR');
+      expect(document.documentElement.lang).toBe('pt-BR');
+    });
+
     it('should persist selected locale to localStorage', () => {
       service.setLocale('fr', true);
       expect(localStorage.getItem('hashapass_locale')).toBe('fr');
@@ -96,7 +123,6 @@ describe('LocaleService', () => {
 
     it('should ignore unsupported locale strings', () => {
       service.setLocale('en');
-      // @ts-expect-error testing invalid input
       service.setLocale('invalid');
       expect(service.currentLocale()).toBe('en');
     });

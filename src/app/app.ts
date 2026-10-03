@@ -25,7 +25,7 @@ export class App implements OnInit {
   zippyHow = signal(false);
   zippyWhere = signal(false);
 
-  readonly supportedLocales: SupportedLocale[] = ['en', 'fr', 'de', 'ja'];
+  readonly supportedLocales: SupportedLocale[] = ['en', 'fr', 'de', 'ja', 'pt-BR'];
 
   get t() {
     return this.localeService.t();

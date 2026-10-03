@@ -1,4 +1,4 @@
-export type SupportedLocale = 'en' | 'fr' | 'de' | 'ja';
+export type SupportedLocale = 'en' | 'fr' | 'de' | 'ja' | 'pt-BR';
 
 export interface LocaleTranslations {
   name: string;
@@ -180,5 +180,44 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     banner:
       '⚠️ <strong>HashapassはGitHub Pagesに移行します！</strong> ブックマークを {url} に更新してください。旧ドメインからのリダイレクトは2027年まで継続します。',
     footer: 'Hashapass · 決定論的クライアントサイド・パスワード生成ツール · {link}でホスト中',
+  },
+  'pt-BR': {
+    name: 'Português',
+    subtitle: 'gerador de senhas',
+    parameterLabel: 'Parâmetro',
+    parameterPlaceholder: 'ex. google.com',
+    parameterHelp: 'Algo simples (“site”, “email”...)',
+    seedLabel: 'Senha mestra',
+    seedHelp: 'Crie uma senha difícil — e não se esqueça dela',
+    submitButton: 'Hashapass!',
+    copyButton: 'Copiar',
+    copiedButton: 'Copiado!',
+    tagline: 'Uma senha diferente para cada site e apenas uma senha para lembrar.',
+    description:
+      'O Hashapass gera senhas fortes automaticamente a partir de uma senha mestra e de um parâmetro.',
+    zippyWhyTitle: 'Por que usar o Hashapass?',
+    zippyWhyP1:
+      'Se você for como a maioria das pessoas, reutiliza a mesma senha em vários lugares diferentes.',
+    zippyWhyP2:
+      'Assim que invasores comprometem um site vulnerável, eles roubam senhas e as utilizam para acessar suas outras contas. Quando conseguem entrar em tudo, as coisas complicam.',
+    zippyWhyP3:
+      'O Hashapass permite que você memorize apenas uma senha mestra e a utilize para gerar de forma determinística uma senha diferente para cada site ou serviço.',
+    zippyHowTitle: 'Como funciona?',
+    zippyHowP1:
+      'Primeiro, escolha uma "senha mestra". Crie uma difícil de adivinhar e memorize-a bem.',
+    zippyHowP2:
+      'Para gerar uma senha, digite um parâmetro, como o nome do domínio ou do serviço. O Hashapass calcula o HMAC-SHA1 do seu parâmetro com a sua senha mestra e produz uma sequência de 8 caracteres.',
+    zippyHowP3:
+      'As senhas nunca são transmitidas pela rede nem armazenadas em nenhum banco de dados.',
+    zippyHowP4:
+      'Com a mesma senha mestra e o mesmo parâmetro, o Hashapass sempre fornecerá exatamente o mesmo resultado.',
+    zippyWhereTitle: 'Onde minhas senhas ficam armazenadas?',
+    zippyWhereP1:
+      'Você não precisa armazenar suas senhas geradas em lugar nenhum: basta lembrar da sua senha mestra e do parâmetro.',
+    zippyWhereP2:
+      'Como o processamento é totalmente determinístico e executado no navegador, você pode até salvar esta página para gerar senhas offline, sem conexão com a internet.',
+    banner:
+      '⚠️ <strong>O Hashapass está mudando para o GitHub Pages!</strong> Atualize seus favoritos para {url}. O redirecionamento do domínio anterior continuará ativo até 2027.',
+    footer: 'Hashapass · Gerador determinístico de senhas no navegador · Hospedado no {link}',
   },
 };

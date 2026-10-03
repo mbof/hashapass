@@ -12,16 +12,33 @@ export class LocaleService {
     this.initLocale();
   }
 
+  normalizeLocale(lang: string): SupportedLocale | null {
+    if (!lang) {
+      return null;
+    }
+    const l = lang.toLowerCase();
+    if (l === 'pt' || l === 'pt-br' || l === 'pt_br') {
+      return 'pt-BR';
+    }
+    if (['en', 'fr', 'de', 'ja'].includes(l)) {
+      return l as SupportedLocale;
+    }
+    return null;
+  }
+
   /**
    * Detects the locale from a given path and search query.
-   * Handles paths like /hashapass//fr/index.html, /hashapass/fr/, /fr/index.html, and ?lang=fr.
+   * Handles paths like /hashapass//pt-BR/index.html, /hashapass/pt-br/, and ?lang=pt-BR.
    */
   detectLocale(pathname: string, search: string): SupportedLocale | null {
     if (search) {
       const params = new URLSearchParams(search);
       const queryLang = params.get('lang') || params.get('l');
-      if (queryLang && this.isSupported(queryLang.toLowerCase())) {
-        return queryLang.toLowerCase() as SupportedLocale;
+      if (queryLang) {
+        const normalized = this.normalizeLocale(queryLang);
+        if (normalized) {
+          return normalized;
+        }
       }
     }
 
@@ -29,13 +46,18 @@ export class LocaleService {
       return null;
     }
 
-    // Collapse multiple consecutive slashes (e.g. /hashapass//fr/index.html -> /hashapass/fr/index.html)
+    // Collapse multiple consecutive slashes (e.g. /hashapass//pt-BR/index.html -> /hashapass/pt-br/index.html)
     const normalized = pathname.replace(/\/+/g, '/').toLowerCase();
 
     // Match /hashapass/{lang} or /{lang} followed by / or /index.html or end of string
-    const match = normalized.match(/(?:^|\/)(fr|de|ja|en)(?:\/|\/index\.html)?(?:\/)?$/);
-    if (match && this.isSupported(match[1])) {
-      return match[1] as SupportedLocale;
+    const match = normalized.match(
+      /(?:^|\/)(fr|de|ja|en|pt-br|pt_br|pt)(?:\/|\/index\.html)?(?:\/)?$/,
+    );
+    if (match) {
+      const detected = this.normalizeLocale(match[1]);
+      if (detected) {
+        return detected;
+      }
     }
 
     return null;
@@ -63,9 +85,7 @@ export class LocaleService {
         if (
           currentUrl.includes('//') ||
           currentUrl.includes('index.html') ||
-          currentUrl.includes('/fr') ||
-          currentUrl.includes('/de') ||
-          currentUrl.includes('/ja')
+          /(?:\/hashapass)?\/(fr|de|ja|pt-br|pt)/i.test(currentUrl)
         ) {
           window.history.replaceState(null, '', cleanPath);
         }
@@ -76,9 +96,12 @@ export class LocaleService {
     // Fallback: check localStorage
     try {
       const stored = localStorage.getItem('hashapass_locale');
-      if (stored && this.isSupported(stored)) {
-        this.setLocale(stored as SupportedLocale, false);
-        return;
+      if (stored) {
+        const normalized = this.normalizeLocale(stored);
+        if (normalized) {
+          this.setLocale(normalized, false);
+          return;
+        }
       }
     } catch {
       // Ignore localStorage errors
@@ -87,8 +110,10 @@ export class LocaleService {
     // Fallback: browser navigator language
     if (typeof navigator !== 'undefined' && navigator.language) {
       const browserLang = navigator.language.substring(0, 2).toLowerCase();
-      if (this.isSupported(browserLang)) {
-        this.setLocale(browserLang as SupportedLocale, false);
+      const normalized =
+        this.normalizeLocale(navigator.language) || this.normalizeLocale(browserLang);
+      if (normalized) {
+        this.setLocale(normalized, false);
         return;
       }
     }
@@ -97,20 +122,25 @@ export class LocaleService {
     this.setLocale('en', false);
   }
 
-  setLocale(locale: SupportedLocale, persist: boolean = true, updateUrl: boolean = false): void {
-    if (!this.isSupported(locale)) {
+  setLocale(
+    locale: SupportedLocale | string,
+    persist: boolean = true,
+    updateUrl: boolean = false,
+  ): void {
+    const target = this.normalizeLocale(locale);
+    if (!target) {
       return;
     }
 
-    this.currentLocale.set(locale);
+    this.currentLocale.set(target);
 
     if (typeof document !== 'undefined' && document.documentElement) {
-      document.documentElement.lang = locale;
+      document.documentElement.lang = target;
     }
 
     if (persist && typeof window !== 'undefined' && window.localStorage) {
       try {
-        localStorage.setItem('hashapass_locale', locale);
+        localStorage.setItem('hashapass_locale', target);
       } catch {
         // Ignore localStorage quota errors
       }
@@ -126,13 +156,13 @@ export class LocaleService {
         (typeof document !== 'undefined' && document.querySelector('base')?.getAttribute('href')) ||
         '/hashapass/';
       const cleanBase = base.endsWith('/') ? base : `${base}/`;
-      const cleanPath = locale === 'en' ? cleanBase : `${cleanBase}?lang=${locale}`;
+      const cleanPath = target === 'en' ? cleanBase : `${cleanBase}?lang=${target}`;
       window.history.replaceState(null, '', cleanPath);
     }
   }
 
   isSupported(locale: string): locale is SupportedLocale {
-    return ['en', 'fr', 'de', 'ja'].includes(locale);
+    return ['en', 'fr', 'de', 'ja', 'pt-BR'].includes(locale as SupportedLocale);
   }
 
   interpolate(template: string, params: Record<string, string>): string {

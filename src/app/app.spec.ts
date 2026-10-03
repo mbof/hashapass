@@ -73,6 +73,13 @@ describe('App', () => {
     fixture.detectChanges();
     expect(app.currentLocale).toBe('ja');
     expect(app.t.parameterLabel).toBe('パラメータ');
+
+    // Switch to Portuguese (pt-BR)
+    app.setLanguage('pt-BR');
+    fixture.detectChanges();
+    expect(app.currentLocale).toBe('pt-BR');
+    expect(app.t.parameterLabel).toBe('Parâmetro');
+    expect(app.t.seedLabel).toBe('Senha mestra');
   });
 
   it('should dismiss banner and persist dismissal', () => {
@@ -110,6 +117,15 @@ describe('App', () => {
     );
     expect(app.footerHtml()).toContain(
       '<a href="https://mbof.github.io/hashapass/">GitHub Pages</a>でホスト中',
+    );
+
+    // Portuguese - Brazilian Portuguese (pt-BR)
+    app.setLanguage('pt-BR');
+    expect(app.bannerHtml()).toContain(
+      'Atualize seus favoritos para <a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a>.',
+    );
+    expect(app.footerHtml()).toContain(
+      'Hospedado no <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>',
     );
   });
 });
