@@ -1,10 +1,6 @@
 @if (showBanner()) {
   <div class="transition-banner">
-    <div>
-      ⚠️ <strong>{{ t.bannerNotice }}</strong>
-      <a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a>.
-      {{ t.bannerRetire }}
-    </div>
+    <div [innerHTML]="bannerHtml()"></div>
     <button class="close-btn" (click)="dismissBanner()" title="Dismiss">&times;</button>
   </div>
 }
@@ -183,10 +179,10 @@
           </table>
 
           <hr style="margin: 25px 0" />
-          <div style="text-align: center; font-size: x-small; color: #555">
-            Hashapass &middot; {{ t.footer }}
-            <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>
-          </div>
+          <div
+            style="text-align: center; font-size: x-small; color: #555"
+            [innerHTML]="footerHtml()"
+          ></div>
         </td>
       </tr>
     </tbody>

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HashapassService } from './services/hashapass.service';
 import { LocaleService } from './services/locale.service';
@@ -34,6 +34,18 @@ export class App implements OnInit {
   get currentLocale() {
     return this.localeService.currentLocale();
   }
+
+  readonly bannerHtml = computed(() => {
+    return this.localeService.interpolate(this.localeService.t().banner, {
+      url: '<a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a>',
+    });
+  });
+
+  readonly footerHtml = computed(() => {
+    return this.localeService.interpolate(this.localeService.t().footer, {
+      link: '<a href="https://mbof.github.io/hashapass/">GitHub Pages</a>',
+    });
+  });
 
   getLocaleName(loc: SupportedLocale): string {
     return TRANSLATIONS[loc].name;

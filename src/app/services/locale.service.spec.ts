@@ -102,6 +102,23 @@ describe('LocaleService', () => {
     });
   });
 
+  describe('interpolate', () => {
+    it('should replace named placeholders with provided parameters', () => {
+      const template = 'Update bookmarks to {url}. Hosted on {link}';
+      const result = service.interpolate(template, {
+        url: 'example.com',
+        link: 'GitHub',
+      });
+      expect(result).toBe('Update bookmarks to example.com. Hosted on GitHub');
+    });
+
+    it('should preserve unknown placeholders', () => {
+      const template = 'Hello {name}, keep {unknown}';
+      const result = service.interpolate(template, { name: 'World' });
+      expect(result).toBe('Hello World, keep {unknown}');
+    });
+  });
+
   describe('URL normalization on initialization', () => {
     it('should clean up double-slash path via history.replaceState', () => {
       window.history.pushState({}, '', '/hashapass//fr/index.html');

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { App } from './app';
+import { LocaleService } from './services/locale.service';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -8,6 +9,8 @@ describe('App', () => {
     await TestBed.configureTestingModule({
       imports: [App],
     }).compileComponents();
+    const localeService = TestBed.inject(LocaleService);
+    localeService.setLocale('en', false);
   });
 
   it('should create the app', () => {
@@ -80,5 +83,33 @@ describe('App', () => {
     app.dismissBanner();
     expect(app.showBanner()).toBe(false);
     expect(localStorage.getItem('hashapass_banner_dismissed')).toBe('1');
+  });
+
+  it('should interpolate link placeholders in banner and footer for natural sentence structure', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    // English
+    expect(app.bannerHtml()).toContain(
+      'Please update your bookmarks to <a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a>.',
+    );
+    expect(app.footerHtml()).toContain(
+      'Hosted on <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>',
+    );
+
+    // French - space after "vers "
+    app.setLanguage('fr');
+    expect(app.bannerHtml()).toContain(
+      'mettre à jour vos favoris vers <a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a>.',
+    );
+
+    // Japanese - natural word order with {url} in the middle
+    app.setLanguage('ja');
+    expect(app.bannerHtml()).toContain(
+      'ブックマークを <a href="https://mbof.github.io/hashapass/">mbof.github.io/hashapass</a> に更新してください。',
+    );
+    expect(app.footerHtml()).toContain(
+      '<a href="https://mbof.github.io/hashapass/">GitHub Pages</a>でホスト中',
+    );
   });
 });

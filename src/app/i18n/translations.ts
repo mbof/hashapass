@@ -28,8 +28,7 @@ export interface LocaleTranslations {
   zippyWhereTitle: string;
   zippyWhereP1: string;
   zippyWhereP2: string;
-  bannerNotice: string;
-  bannerRetire: string;
+  banner: string;
   footer: string;
 }
 
@@ -70,9 +69,9 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
       "You don't store your generated passwords anywhere: just remember your master password and the parameter name.",
     zippyWhereP2:
       'Because the logic is fully client-side and deterministic, you can even save this page offline and generate your passwords without an internet connection.',
-    bannerNotice: 'Hashapass is moving to GitHub Pages! Please update your bookmarks to',
-    bannerRetire: 'The previous domain redirect will remain active until 2027.',
-    footer: 'Deterministic Client-Side Password Generator · Hosted on',
+    banner:
+      '⚠️ <strong>Hashapass is moving to GitHub Pages!</strong> Please update your bookmarks to {url}. The previous domain redirect will remain active until 2027.',
+    footer: 'Hashapass · Deterministic Client-Side Password Generator · Hosted on {link}',
   },
   fr: {
     name: 'Français',
@@ -112,9 +111,9 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
       'Vous n’avez pas besoin d’enregistrer vos mots de passe générés : retenez simplement votre mot de passe maître et le nom du paramètre.',
     zippyWhereP2:
       'Puisque le traitement s’exécute entièrement dans votre navigateur, vous pouvez même enregistrer cette page pour l’utiliser hors ligne.',
-    bannerNotice: 'Hashapass déménage sur GitHub Pages ! Veuillez mettre à jour vos favoris vers',
-    bannerRetire: 'La redirection de l’ancien domaine restera active jusqu’en 2027.',
-    footer: 'Générateur de mot de passe déterministe côté client · Hébergé sur',
+    banner:
+      '⚠️ <strong>Hashapass déménage sur GitHub Pages !</strong> Veuillez mettre à jour vos favoris vers {url}. La redirection de l’ancien domaine restera active jusqu’en 2027.',
+    footer: 'Hashapass · Générateur de mot de passe déterministe côté client · Hébergé sur {link}',
   },
   de: {
     name: 'Deutsch',
@@ -154,10 +153,9 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
       'Sie müssen die generierten Passwörter nirgendwo speichern: merken Sie sich einfach Ihr Master-Passwort und den Parameternamen.',
     zippyWhereP2:
       'Da die Berechnung vollständig im Browser erfolgt, können Sie diese Seite auch offline ohne Internetverbindung nutzen.',
-    bannerNotice:
-      'Hashapass zieht auf GitHub Pages um! Bitte aktualisieren Sie Ihre Lesezeichen auf',
-    bannerRetire: 'Die Weiterleitung der alten Domain bleibt bis 2027 aktiv.',
-    footer: 'Deterministischer Client-seitiger Passwortgenerator · Gehostet auf',
+    banner:
+      '⚠️ <strong>Hashapass zieht auf GitHub Pages um!</strong> Bitte aktualisieren Sie Ihre Lesezeichen auf {url}. Die Weiterleitung der alten Domain bleibt bis 2027 aktiv.',
+    footer: 'Hashapass · Deterministischer Client-seitiger Passwortgenerator · Gehostet auf {link}',
   },
   ja: {
     name: '日本語',
@@ -194,8 +192,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
       '生成されたパスワードをどこかに保存しておく必要はありません。マスターパスワードとパラメータ名だけを覚えておくだけです。',
     zippyWhereP2:
       'すべての処理はブラウザ内で完結するため、このページを保存してオフラインで利用することも可能です。',
-    bannerNotice: 'HashapassはGitHub Pagesに移行します。ブックマークを更新してください：',
-    bannerRetire: '旧ドメインからのリダイレクトは2027年まで継続します。',
-    footer: '決定論的クライアントサイド・パスワード生成ツール · Hosted on',
+    banner:
+      '⚠️ <strong>HashapassはGitHub Pagesに移行します！</strong> ブックマークを {url} に更新してください。旧ドメインからのリダイレクトは2027年まで継続します。',
+    footer: 'Hashapass · 決定論的クライアントサイド・パスワード生成ツール · {link}でホスト中',
   },
 };
