@@ -84,6 +84,53 @@
   padding-left: 0.5em;
 }
 
+.input-with-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+.result-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+.toggle-password-btn {
+  background: #f7f7f7;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 2px 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  line-height: 1;
+  vertical-align: middle;
+  height: 22px;
+  box-sizing: border-box;
+}
+
+.toggle-password-btn:hover {
+  color: #7a1616;
+  border-color: #7a1616;
+  background-color: #fefee8;
+}
+
+.toggle-password-btn:focus-visible {
+  outline: 2px solid #7a1616;
+  outline-offset: 1px;
+}
+
+.toggle-password-icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
 .copy-button {
   cursor: pointer;
   padding: 2px 8px;
@@ -161,6 +208,34 @@
     color: #555;
   }
 
+  .input-with-toggle {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .input-with-toggle .form-input {
+    flex: 1;
+    min-width: 0;
+    width: auto !important;
+  }
+
+  .toggle-password-btn {
+    min-height: 44px;
+    min-width: 44px;
+    height: auto;
+    padding: 0 12px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    background-color: #f7f7f7;
+  }
+
+  .toggle-password-icon {
+    width: 20px;
+    height: 20px;
+  }
+
   .form-divider-row {
     display: none !important;
   }
@@ -191,6 +266,7 @@
 
   .result-input {
     flex: 1;
+    min-width: 0;
     width: auto !important;
     font-size: 18px !important;
     padding: 8px 10px !important;

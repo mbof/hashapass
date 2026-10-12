@@ -11,6 +11,8 @@ export interface LocaleTranslations {
   submitButton: string;
   copyButton: string;
   copiedButton: string;
+  showPassword: string;
+  hidePassword: string;
   tagline: string;
   description: string;
   zippyWhyTitle: string;
@@ -41,6 +43,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     submitButton: 'Hashapass!',
     copyButton: 'Copy',
     copiedButton: 'Copied!',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
     tagline: 'A different password for every website and just one password to remember.',
     description:
       'Hashapass automatically generates strong passwords from a master password and a parameter.',
@@ -78,6 +82,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     submitButton: 'Hashapass !',
     copyButton: 'Copier',
     copiedButton: 'Copié !',
+    showPassword: 'Afficher le mot de passe',
+    hidePassword: 'Masquer le mot de passe',
     tagline: 'Un mot de passe différent pour chaque site web et un seul mot de passe à retenir.',
     description:
       'Hashapass génère automatiquement des mots de passe forts à partir d’un mot de passe maître et d’un paramètre.',
@@ -117,6 +123,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     submitButton: 'Hashapass!',
     copyButton: 'Kopieren',
     copiedButton: 'Kopiert!',
+    showPassword: 'Passwort anzeigen',
+    hidePassword: 'Passwort ausblenden',
     tagline: 'Ein anderes Passwort für jede Webseite und nur ein einziges Passwort zum Merken.',
     description:
       'Hashapass generiert automatisch starke Passwörter aus einem Master-Passwort und einem Parameter.',
@@ -156,6 +164,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     submitButton: 'Hashapass!',
     copyButton: 'コピー',
     copiedButton: 'コピー完了！',
+    showPassword: 'パスワードを表示',
+    hidePassword: 'パスワードを非表示',
     tagline: 'すべてのウェブサイトに異なるパスワードを、覚えるパスワードは1つだけ。',
     description: 'Hashapassはマスターパスワードとパラメータから強力なパスワードを自動生成します。',
     zippyWhyTitle: 'なぜHashapassを使うのか？',
@@ -192,6 +202,8 @@ export const TRANSLATIONS: Record<SupportedLocale, LocaleTranslations> = {
     submitButton: 'Hashapass!',
     copyButton: 'Copiar',
     copiedButton: 'Copiado!',
+    showPassword: 'Mostrar senha',
+    hidePassword: 'Ocultar senha',
     tagline: 'Uma senha diferente para cada site e apenas uma senha para lembrar.',
     description:
       'O Hashapass gera senhas fortes automaticamente a partir de uma senha mestra e de um parâmetro.',

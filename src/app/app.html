@@ -61,14 +61,37 @@
                   <tr>
                     <td class="form-label">{{ t.seedLabel }}</td>
                     <td class="form-input-cell">
-                      <input
-                        type="password"
-                        id="seedId"
-                        name="seed"
-                        size="16"
-                        class="form-input"
-                        [(ngModel)]="seed"
-                      />
+                      <div class="input-with-toggle">
+                        <input
+                          [type]="showMasterPassword() ? 'text' : 'password'"
+                          id="seedId"
+                          name="seed"
+                          size="16"
+                          class="form-input"
+                          [(ngModel)]="seed"
+                        />
+                        <button
+                          type="button"
+                          class="toggle-password-btn"
+                          (click)="toggleMasterPasswordVisibility()"
+                          [title]="showMasterPassword() ? t.hidePassword : t.showPassword"
+                          [attr.aria-label]="showMasterPassword() ? t.hidePassword : t.showPassword"
+                        >
+                          @if (showMasterPassword()) {
+                            <svg class="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                              <line x1="2" y1="2" x2="22" y2="22" />
+                            </svg>
+                          } @else {
+                            <svg class="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          }
+                        </button>
+                      </div>
                     </td>
                     <td class="form-help">
                       {{ t.seedHelp }}
@@ -89,14 +112,35 @@
                     <td class="form-input-cell">
                       <div class="result-group">
                         <input
+                          [type]="showGeneratedPassword() ? 'text' : 'password'"
                           name="result"
                           id="resultId"
                           size="16"
-                          readonly
                           class="result-input"
                           [value]="result()"
                           (click)="selectResult($event)"
                         />
+                        <button
+                          type="button"
+                          class="toggle-password-btn"
+                          (click)="toggleGeneratedPasswordVisibility()"
+                          [title]="showGeneratedPassword() ? t.hidePassword : t.showPassword"
+                          [attr.aria-label]="showGeneratedPassword() ? t.hidePassword : t.showPassword"
+                        >
+                          @if (showGeneratedPassword()) {
+                            <svg class="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                              <line x1="2" y1="2" x2="22" y2="22" />
+                            </svg>
+                          } @else {
+                            <svg class="toggle-password-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          }
+                        </button>
                         @if (result()) {
                           <button type="button" class="copy-button" (click)="copyToClipboard()">
                             {{ copied() ? t.copiedButton : t.copyButton }}

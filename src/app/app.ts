@@ -20,6 +20,8 @@ export class App implements OnInit {
   result = signal('');
   copied = signal(false);
   showBanner = signal(true);
+  showMasterPassword = signal(false);
+  showGeneratedPassword = signal(true);
 
   zippyWhy = signal(false);
   zippyHow = signal(false);
@@ -93,6 +95,14 @@ export class App implements OnInit {
     }
   }
 
+  toggleMasterPasswordVisibility(): void {
+    this.showMasterPassword.update((v) => !v);
+  }
+
+  toggleGeneratedPasswordVisibility(): void {
+    this.showGeneratedPassword.update((v) => !v);
+  }
+
   async copyToClipboard(): Promise<void> {
     const text = this.result();
     if (!text) {
@@ -100,13 +110,14 @@ export class App implements OnInit {
     }
 
     try {
-      if (navigator.clipboard) {
+      if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
         this.copied.set(true);
         setTimeout(() => this.copied.set(false), 2000);
+      } else {
+        throw new Error('Clipboard API unavailable');
       }
     } catch {
-      // Fallback: select element
       const resultElem = document.getElementById('resultId') as HTMLInputElement | null;
       if (resultElem) {
         resultElem.select();

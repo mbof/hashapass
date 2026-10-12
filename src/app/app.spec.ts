@@ -128,4 +128,86 @@ describe('App', () => {
       'Hospedado no <a href="https://mbof.github.io/hashapass/">GitHub Pages</a>',
     );
   });
+
+  it('should have default password visibility (master invisible, generated visible)', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(app.showMasterPassword()).toBe(false);
+    expect(app.showGeneratedPassword()).toBe(true);
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const seedInput = compiled.querySelector('#seedId') as HTMLInputElement;
+    const resultInput = compiled.querySelector('#resultId') as HTMLInputElement;
+
+    expect(seedInput.type).toBe('password');
+    expect(resultInput.type).toBe('text');
+  });
+
+  it('should toggle master and generated password visibility', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const seedInput = compiled.querySelector('#seedId') as HTMLInputElement;
+    const resultInput = compiled.querySelector('#resultId') as HTMLInputElement;
+
+    // Toggle master password to visible
+    app.toggleMasterPasswordVisibility();
+    fixture.detectChanges();
+    expect(app.showMasterPassword()).toBe(true);
+    expect(seedInput.type).toBe('text');
+
+    // Toggle back to invisible
+    app.toggleMasterPasswordVisibility();
+    fixture.detectChanges();
+    expect(app.showMasterPassword()).toBe(false);
+    expect(seedInput.type).toBe('password');
+
+    // Toggle generated password to invisible
+    app.toggleGeneratedPasswordVisibility();
+    fixture.detectChanges();
+    expect(app.showGeneratedPassword()).toBe(false);
+    expect(resultInput.type).toBe('password');
+
+    // Toggle back to visible
+    app.toggleGeneratedPasswordVisibility();
+    fixture.detectChanges();
+    expect(app.showGeneratedPassword()).toBe(true);
+    expect(resultInput.type).toBe('text');
+  });
+
+  it('should not mark result input as readonly so native cut/copy works', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const resultInput = compiled.querySelector('#resultId') as HTMLInputElement;
+
+    expect(resultInput.readOnly).toBe(false);
+  });
+
+  it('should copy generated password via copyToClipboard', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    await fixture.whenStable();
+
+    const writeTextSpy = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText: writeTextSpy },
+      configurable: true,
+    });
+
+    app.result.set('secretpass123');
+    fixture.detectChanges();
+
+    await app.copyToClipboard();
+    expect(writeTextSpy).toHaveBeenCalledWith('secretpass123');
+    expect(app.copied()).toBe(true);
+  });
 });
