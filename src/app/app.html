@@ -47,7 +47,7 @@
                       <input
                         id="parameterId"
                         name="parameter"
-                        size="16"
+                        autofocus
                         class="form-input"
                         autocomplete="on"
                         [(ngModel)]="parameter"
@@ -61,13 +61,12 @@
                   <tr>
                     <td class="form-label">{{ t.seedLabel }}</td>
                     <td class="form-input-cell">
-                      <div class="input-with-toggle">
+                      <div class="input-wrapper">
                         <input
                           [type]="showMasterPassword() ? 'text' : 'password'"
                           id="seedId"
                           name="seed"
-                          size="16"
-                          class="form-input"
+                          class="form-input form-input-with-toggle"
                           [(ngModel)]="seed"
                         />
                         <button
@@ -110,13 +109,12 @@
                       />
                     </td>
                     <td class="form-input-cell">
-                      <div class="result-group">
+                      <div class="input-wrapper">
                         <input
                           [type]="showGeneratedPassword() ? 'text' : 'password'"
                           name="result"
                           id="resultId"
-                          size="16"
-                          class="result-input"
+                          class="form-input result-input form-input-with-toggle"
                           [value]="result()"
                           (click)="selectResult($event)"
                         />
@@ -141,14 +139,15 @@
                             </svg>
                           }
                         </button>
-                        @if (result()) {
-                          <button type="button" class="copy-button" (click)="copyToClipboard()">
-                            {{ copied() ? t.copiedButton : t.copyButton }}
-                          </button>
-                        }
                       </div>
                     </td>
-                    <td class="result-action-cell"></td>
+                    <td class="result-action-cell">
+                      @if (result()) {
+                        <button type="button" class="copy-button" (click)="copyToClipboard()">
+                          {{ copied() ? t.copiedButton : t.copyButton }}
+                        </button>
+                      }
+                    </td>
                   </tr>
                 </tbody>
               </table>

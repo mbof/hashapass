@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, signal, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HashapassService } from './services/hashapass.service';
 import { LocaleService } from './services/locale.service';
@@ -11,7 +11,7 @@ import { SupportedLocale, TRANSLATIONS } from './i18n/translations';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
+export class App implements OnInit, AfterViewInit {
   private readonly hashapassService = inject(HashapassService);
   readonly localeService = inject(LocaleService);
 
@@ -62,6 +62,17 @@ export class App implements OnInit {
     }
   }
 
+  ngAfterViewInit(): void {
+    if (typeof document !== 'undefined') {
+      setTimeout(() => {
+        const paramElem = document.getElementById('parameterId') as HTMLInputElement | null;
+        if (paramElem) {
+          paramElem.focus();
+        }
+      }, 0);
+    }
+  }
+
   setLanguage(lang: SupportedLocale): void {
     this.localeService.setLocale(lang, true, true);
   }
@@ -77,7 +88,6 @@ export class App implements OnInit {
 
     const output = this.hashapassService.generate(this.seed, this.parameter);
     this.result.set(output);
-    this.seed = ''; // Clear master password for security, matching original behavior
 
     setTimeout(() => {
       const resultElem = document.getElementById('resultId') as HTMLInputElement | null;

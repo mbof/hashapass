@@ -42,82 +42,69 @@
   border-collapse: collapse;
 }
 
-.form-label {
+.form-label,
+.form-submit-cell {
   text-align: right;
-  width: 30%;
   padding-right: 8px;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .form-input-cell {
   padding: 4px 0;
+  vertical-align: middle;
+  width: 170px;
 }
 
-.form-input {
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 170px;
+  vertical-align: middle;
+}
+
+.form-input,
+.result-input {
+  width: 170px;
+  height: 26px;
   font-family: monospace;
-}
-
-.form-help {
-  font-size: small;
-  text-align: left;
-  padding-left: 0.5em;
-  color: #333;
-}
-
-.form-submit-cell {
-  text-align: right;
-  padding-right: 8px;
-}
-
-.form-submit-btn {
-  font-family: inherit;
-  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 5px;
+  box-sizing: border-box;
+  border: 1px solid #7f9db9;
+  border-radius: 2px;
+  background: #fff;
+  vertical-align: middle;
+  margin: 0;
 }
 
 .result-input {
-  font-family: monospace;
   font-weight: bold;
 }
 
-.result-action-cell {
-  font-size: small;
-  text-align: left;
-  padding-left: 0.5em;
-}
-
-.input-with-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  vertical-align: middle;
-}
-
-.result-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  vertical-align: middle;
+.form-input-with-toggle {
+  width: 100%;
+  padding-right: 26px;
 }
 
 .toggle-password-btn {
-  background: #f7f7f7;
-  border: 1px solid #aaa;
-  border-radius: 3px;
-  padding: 2px 4px;
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
   cursor: pointer;
+  padding: 2px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #555;
+  color: #666;
   line-height: 1;
-  vertical-align: middle;
-  height: 22px;
-  box-sizing: border-box;
 }
 
 .toggle-password-btn:hover {
   color: #7a1616;
-  border-color: #7a1616;
-  background-color: #fefee8;
 }
 
 .toggle-password-btn:focus-visible {
@@ -127,14 +114,33 @@
 
 .toggle-password-icon {
   display: block;
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
+}
+
+.form-help,
+.result-action-cell {
+  font-size: small;
+  text-align: left;
+  padding-left: 0.5em;
+  color: #333;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.form-submit-btn {
+  font-family: inherit;
+  cursor: pointer;
+  padding: 1px 6px;
+  vertical-align: middle;
 }
 
 .copy-button {
   cursor: pointer;
   padding: 2px 8px;
   font-family: inherit;
+  font-size: small;
+  vertical-align: middle;
 }
 
 .info-table {
@@ -201,39 +207,42 @@
     box-sizing: border-box;
   }
 
-  .form-help {
-    padding-top: 4px !important;
-    padding-bottom: 8px !important;
-    padding-left: 2px !important;
-    color: #555;
+  .input-wrapper {
+    width: 100% !important;
+    display: block;
   }
 
-  .input-with-toggle {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-    width: 100%;
+  .form-input,
+  .result-input {
+    width: 100% !important;
+    height: 44px !important;
+    font-size: 16px !important; /* Prevents auto-zoom on mobile Safari */
+    padding: 8px 10px !important;
+    border: 1px solid #999;
+    border-radius: 4px;
+    box-sizing: border-box;
   }
 
-  .input-with-toggle .form-input {
-    flex: 1;
-    min-width: 0;
-    width: auto !important;
+  .form-input-with-toggle {
+    padding-right: 44px !important;
   }
 
   .toggle-password-btn {
-    min-height: 44px;
-    min-width: 44px;
-    height: auto;
-    padding: 0 12px;
-    border-radius: 4px;
-    border: 1px solid #999;
-    background-color: #f7f7f7;
+    right: 4px;
+    padding: 10px;
   }
 
   .toggle-password-icon {
     width: 20px;
     height: 20px;
+  }
+
+  .form-help {
+    padding-top: 4px !important;
+    padding-bottom: 8px !important;
+    padding-left: 2px !important;
+    color: #555;
+    white-space: normal !important;
   }
 
   .form-divider-row {
@@ -242,6 +251,7 @@
 
   .form-submit-cell {
     padding-top: 8px !important;
+    white-space: normal !important;
   }
 
   .form-submit-btn {
@@ -256,40 +266,22 @@
     margin-bottom: 12px;
   }
 
-  .result-group {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-    width: 100%;
-    margin-top: 4px;
-  }
-
-  .result-input {
-    flex: 1;
-    min-width: 0;
-    width: auto !important;
-    font-size: 18px !important;
-    padding: 8px 10px !important;
-    border: 1px solid #7a1616;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background: #fff;
+  .result-action-cell {
+    padding-top: 8px !important;
+    padding-left: 0 !important;
+    white-space: normal !important;
   }
 
   .copy-button {
+    width: 100% !important;
     min-height: 44px;
     padding: 0 16px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     background: #7a1616;
     color: #fff;
     border: none;
     border-radius: 4px;
-    white-space: nowrap;
-  }
-
-  .result-action-cell {
-    padding-left: 0 !important;
   }
 
   p {

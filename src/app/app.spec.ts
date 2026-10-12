@@ -29,7 +29,7 @@ describe('App', () => {
     expect(compiled.querySelector('#resultId')).toBeTruthy();
   });
 
-  it('should generate password and clear master password on form submit', async () => {
+  it('should generate password and keep master password on form submit', async () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
     app.parameter = 'google.com';
@@ -38,7 +38,7 @@ describe('App', () => {
     app.onUpdate();
 
     expect(app.result()).toBe('zUpz2XKS');
-    expect(app.seed).toBe(''); // Seed cleared for security
+    expect(app.seed).toBe('secretkey123'); // Master password is kept
   });
 
   it('should toggle zippies', () => {
@@ -209,5 +209,16 @@ describe('App', () => {
     await app.copyToClipboard();
     expect(writeTextSpy).toHaveBeenCalledWith('secretpass123');
     expect(app.copied()).toBe(true);
+  });
+
+  it('should have autofocus attribute on parameter input for initial focus', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const paramInput = compiled.querySelector('#parameterId') as HTMLInputElement;
+
+    expect(paramInput.hasAttribute('autofocus')).toBe(true);
   });
 });
