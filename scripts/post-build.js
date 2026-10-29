@@ -21,8 +21,19 @@ if (fs.existsSync(indexPath)) {
   fs.writeFileSync(fallbackPath, html, 'utf8');
   console.log('[post-build] Output index.html and 404.html ready.');
 
-  // Generate static stubs for localized paths (/fr/, /de/, /ja/, /pt-BR/, /pt-br/, /pt/)
+  const cmdPath = path.join(distDir, 'cmd.html');
+  if (fs.existsSync(cmdPath)) {
+    let cmdHtml = fs.readFileSync(cmdPath, 'utf8');
+    if (websiteId && websiteId !== 'UMAMI_WEBSITE_ID') {
+      const scriptTag = `    <script defer src="https://cloud.umami.is/script.js" data-website-id="${websiteId}"></script>\n  </head>`;
+      cmdHtml = cmdHtml.replace('</head>', scriptTag);
+      fs.writeFileSync(cmdPath, cmdHtml, 'utf8');
+    }
+  }
+
+  // Generate static stubs for localized paths (/en/, /fr/, /de/, /ja/, /pt-BR/, /pt-br/, /pt/)
   const locales = [
+    { dir: 'en', lang: 'en' },
     { dir: 'fr', lang: 'fr' },
     { dir: 'de', lang: 'de' },
     { dir: 'ja', lang: 'ja' },
@@ -37,6 +48,9 @@ if (fs.existsSync(indexPath)) {
     }
     const locHtml = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
     fs.writeFileSync(path.join(locDir, 'index.html'), locHtml, 'utf8');
-    console.log(`[post-build] Generated static stub for /${dir}/index.html`);
+    if (fs.existsSync(cmdPath)) {
+      fs.copyFileSync(cmdPath, path.join(locDir, 'cmd.html'));
+    }
+    console.log(`[post-build] Generated static stub for /${dir}/index.html and /${dir}/cmd.html`);
   }
 }
